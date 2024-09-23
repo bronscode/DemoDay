@@ -1,9 +1,9 @@
 import React from 'react';
 import { NodeResizer, useReactFlow } from '@xyflow/react';
 
-import "./StandNode.css"
+import "./WallNode.css"
   
-function StandNode({id, data }) {
+function WallNode({id, data }) {
 	const { getNodes, setNodes } = useReactFlow();
 
 
@@ -21,23 +21,22 @@ function StandNode({id, data }) {
 							node.id === id
 								? {
 										...node,
-										data: {width: ResizeParams.x, height: ResizeParams.y}
+										data: {...node.data, width: ResizeParams.x, height: ResizeParams.y}
 								  }
 								: node,
 						),
 					);
 				}}
-				minWidth={100}
-				minHeight={30}
+				minWidth={30}
+				minHeight={100}
 			/>
 			<div
-				className={`StandNode`}
-				style={{ background: `brown` }}
+				className={`WallNode`}
+				style={{ background: `grey` }}
 			>
-				<label>{data.label  ? data.label : "Testlabel"}</label>
 			</div>
 		</>
   );
 }
 
-export default StandNode
+export default WallNode
