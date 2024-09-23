@@ -1,0 +1,19 @@
+.react-flow__node.react-flow__node-standNode {
+	z-index: 0 !important;
+}
+
+.StandNode {
+	position: relative;
+    display: flex;
+	width: 100%;
+	height: 100%;
+	background: rgba(48, 59, 211, 0.075);
+	min-width: 100px;
+	min-height: 30px;
+}
+
+.StandNode > label {
+	flex: 1;
+    align-self: center;
+    justify-content: center;
+}
