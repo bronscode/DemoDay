@@ -29,7 +29,6 @@ const initialNodes = [
     type: "agentNode",
     draggable: false,
   },
- 
 ];
 
 const snapGrid: [number, number] = [32, 32];
@@ -44,10 +43,13 @@ export default function FlowView() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setNodes((prevNodes) =>
-        prevNodes.map((node) =>
-          isAgentNode(node) ? step(node, prevNodes as any) : node
-        ).filter(x => x !== null) as any
+      setNodes(
+        (prevNodes) =>
+          prevNodes
+            .map((node) =>
+              isAgentNode(node) ? step(node, prevNodes as any) : node
+            )
+            .filter((x) => x !== null) as any
       );
     }, 500);
     return () => clearInterval(interval);
@@ -64,18 +66,24 @@ export default function FlowView() {
         onNodesChange={onNodesChange}
         snapToGrid
         snapGrid={snapGrid}
-        translateExtent={[[-1000, -600], [1000,600]]}
-        nodeExtent={[[-1000,-600], [1000,600]]}
+        translateExtent={[
+          [-1000, -600],
+          [1000, 600],
+        ]}
+        nodeExtent={[
+          [-1000, -600],
+          [1000, 600],
+        ]}
         minZoom={1.5}
         maxZoom={4}
       >
         <Controls />
-        <MiniMap />
+        <MiniMap nodeColor="#1282a2" maskColor="#66666688" />
         <Background
           variant={BackgroundVariant.Dots}
-          gap={32}
-          size={2}
-          offset={2}
+          gap={16}
+          size={1}
+          offset={4}
         />
       </ReactFlow>
       <Panel position="bottom-center">

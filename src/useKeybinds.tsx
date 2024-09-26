@@ -28,13 +28,14 @@ const addStand: KeyPressCallback = (flow) => {
     position: scalarMult(randomVec(), 200),
     data: { label: "StandNode" },
     type: "standNode",
+    zIndex: 5,
   };
   flow.setNodes((prev) => prev.concat(newNode));
 };
 
 const addAgent: KeyPressCallback = (flow) => {
   const nodes = flow.getNodes();
-  let newNodes: any = []
+  let newNodes: any = [];
   for (let i = 0; i < 10; i++) {
     const id = getNewId(nodes.concat(newNodes));
     newNodes.push({
@@ -43,6 +44,7 @@ const addAgent: KeyPressCallback = (flow) => {
       data: { label: `AgentNode ${id}`, dv: randomVec() },
       type: "agentNode",
       draggable: false,
+      zIndex: 1,
     });
   }
   flow.setNodes((prev) => prev.concat(newNodes));
@@ -56,6 +58,7 @@ const addWall: KeyPressCallback = (flow) => {
     position: scalarMult(randomVec(), 200),
     data: { label: "WallNode", width: 30, heigth: 100 },
     type: "wallNode",
+    zIndex: 5,
   };
   flow.setNodes((prev) => prev.concat(newNode));
 };

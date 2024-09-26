@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -10,4 +10,51 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+:root {
+  --xy-resize-background-color: #ddd;
+}
+
+.react-flow__background {
+  background-color: #020818
+}
+
+label {
+  color: #fff;
+  font-size: 12px;
+}
+
+.react-flow__resize-control.handle {
+  border-color: var(--xy-resize-background-color);
+}
+
+.AgentNode {
+  --color: #25afd5;
+}
+.AgentNode.collision {
+  --color: rgb(216, 46, 46);
+}
+
+.AgentNode {
+  background-color: transparent;
+  border-color: transparent;
+  position: relative;
+} .AgentNode::after {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  left: calc(50% - 6px);
+  top: calc(50% - 6px);
+  background-color: var(--color);
+  box-shadow: 0 0 15px 5px var(--color);
+}
+
+.react-flow__minimap-svg {
+  width: 300px;
+  height: 200px;
+  background-color: #0a1128;
+  border: 1px solid #444;
 }

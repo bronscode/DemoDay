@@ -11,7 +11,7 @@ import {
 
 export interface Agent {
   id: string;
-  data: { label: string; dv: Vector2D, color: string };
+  data: { label: string; dv: Vector2D, collision?: boolean };
   position: Vector2D;
   type: string;
   draggable: boolean;
@@ -35,7 +35,7 @@ export interface Wall {
 
 const AGENT_SPEED = 10;
 const MIN_DISTANCE = 120;
-const NODE_WIDTH = 106;
+const NODE_WIDTH = 50;
 
 const VECTOR_FIELD = createNoise2D();
 
@@ -67,7 +67,7 @@ export function isWallOrStandNode(node: any): node is Wall | Stand {
 
 // Function to determine if an agent is about to collide with a wall
 function isCollidingWithWall(agent: Agent, walls: (Wall | Stand)[]): boolean {
-  const radius = (NODE_WIDTH / 2) - 16;
+  const radius = (NODE_WIDTH / 2) - 24;
   for (const wall of walls) {
     if (
       agent.position.x + radius > wall.position.x &&
@@ -75,7 +75,7 @@ function isCollidingWithWall(agent: Agent, walls: (Wall | Stand)[]): boolean {
       agent.position.y + radius > wall.position.y &&
       agent.position.y - radius < wall.position.y + wall.measured.height
     ) {
-      agent.data.color = "red";
+      agent.data.collision = true;
       return true;
     }
   }
