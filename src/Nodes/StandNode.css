@@ -1,7 +1,3 @@
-.react-flow__node.react-flow__node-standNode {
-	z-index: 0 !important;
-}
-
 .StandNode {
 	position: relative;
     display: flex;
