@@ -517,31 +517,31 @@
   {
     "id": "24",
     "position": {
-      "x": 352,
+      "x": 128,
       "y": 256
     },
     "data": {
       "label": "SpawnNode",
-      "width": 352,
+      "width": 64,
       "heigth": 100,
       "height": 256
     },
     "type": "spawnNode",
     "zIndex": 0,
     "measured": {
-      "width": 544,
-      "height": 352
+      "width": 288,
+      "height": 128
     },
-    "selected": true,
+    "selected": false,
     "dragging": false,
-    "width": 544,
-    "height": 352,
+    "width": 288,
+    "height": 128,
     "resizing": true
   },
   {
     "id": "25",
     "position": {
-      "x": -992,
+      "x": -864,
       "y": -512
     },
     "data": {
@@ -560,6 +560,54 @@
     "dragging": false,
     "width": 256,
     "height": 224,
+    "resizing": true
+  },
+  {
+    "id": "7555367",
+    "position": {
+      "x": -390,
+      "y": 330
+    },
+    "data": {
+      "label": "SpawnNode",
+      "width": -390,
+      "heigth": 100,
+      "height": 330
+    },
+    "type": "spawnNode",
+    "zIndex": 0,
+    "measured": {
+      "width": 47,
+      "height": 32
+    },
+    "selected": false,
+    "dragging": false,
+    "width": 47,
+    "height": 32,
+    "resizing": true
+  },
+  {
+    "id": "304628",
+    "position": {
+      "x": -615,
+      "y": 120
+    },
+    "data": {
+      "label": "SpawnNode",
+      "width": -615,
+      "heigth": 100,
+      "height": 120
+    },
+    "type": "spawnNode",
+    "zIndex": 0,
+    "measured": {
+      "width": 32,
+      "height": 47
+    },
+    "selected": true,
+    "dragging": false,
+    "width": 32,
+    "height": 47,
     "resizing": true
   }
 ]

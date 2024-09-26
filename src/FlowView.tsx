@@ -58,7 +58,6 @@ export default function FlowView() {
       if (nodes.filter(isAgentNode).length < AGENT_AMOUNT) {
         const id = getNewId();
         const position = chooseRandomPointInSpawnArea(nodes);
-        console.log(position)
 
         setNodes(prevNodes => prevNodes.concat({
           id: id,
@@ -74,6 +73,7 @@ export default function FlowView() {
     return () => clearInterval(interval);
   });
 
+  // console.log(nodes)
   useKeybinds();
 
   return (

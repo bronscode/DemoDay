@@ -69,7 +69,7 @@ export function isWallOrStandNode(node: any): node is Wall | Stand {
 
 // Function to determine if an agent is about to collide with a wall
 function isCollidingWithWall(agent: Agent, walls: (Wall | Stand)[]): boolean {
-  const radius = (NODE_WIDTH / 2) - 16;
+  const radius = (NODE_WIDTH / 2) - 24;
   for (const wall of walls) {
     if (
       agent.position.x + radius > wall.position.x &&
@@ -104,9 +104,9 @@ function repelAgents(agentA: Agent, agentB: Agent) {
 export function step(curAgent: Agent, objects: (Agent | Stand | Wall)[]) {
   const agent = { ...curAgent };
 
-  // const randomWander = getVectorAt(curAgent.position.x, curAgent.position.y);
+  const randomWander = getVectorAt(curAgent.position.x, curAgent.position.y);
 
-  // agent.data.dv = addDir(agent.data.dv, randomWander);
+  agent.data.dv = addDir(agent.data.dv, randomWander);
 
   //  Avoid collisions with other agents
   objects.forEach((object) => {
