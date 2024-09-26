@@ -4,6 +4,7 @@
     height: 50px;
     background: #ccc;
     border: 3px solid #000;
+    transform: translate(-50%, -50%);
 }
 
 .react-flow__node.react-flow__node-agentNode { 

@@ -1,9 +1,17 @@
 import { createNoise2D } from "simplex-noise";
-import { add, addDir, distance, fromAngle, scalarMult, subtract, Vector2D } from "./vectors";
+import {
+  add,
+  distance,
+  fromAngle,
+  randomVec,
+  scalarMult,
+  subtract,
+  Vector2D,
+} from "./vectors";
 
 export interface Agent {
   id: string;
-  data: { label: string, dv: Vector2D };
+  data: { label: string; dv: Vector2D, color: string };
   position: Vector2D;
   type: string;
   draggable: boolean;
@@ -25,9 +33,9 @@ export interface Wall {
   type: string;
 }
 
-const AGENT_SPEED = 30;
+const AGENT_SPEED = 10;
 const MIN_DISTANCE = 120;
-const NODE_WIDTH = 100;
+const NODE_WIDTH = 106;
 
 const VECTOR_FIELD = createNoise2D();
 
@@ -59,14 +67,15 @@ export function isWallOrStandNode(node: any): node is Wall | Stand {
 
 // Function to determine if an agent is about to collide with a wall
 function isCollidingWithWall(agent: Agent, walls: (Wall | Stand)[]): boolean {
+  const radius = (NODE_WIDTH / 2) - 16;
   for (const wall of walls) {
     if (
-      agent.position.x > wall.position.x &&
-      agent.position.x < wall.position.x + wall.measured.width &&
-      agent.position.y > wall.position.y &&
-      agent.position.y < wall.position.y + wall.measured.height
+      agent.position.x + radius > wall.position.x &&
+      agent.position.x - radius < wall.position.x + wall.measured.width &&
+      agent.position.y + radius > wall.position.y &&
+      agent.position.y - radius < wall.position.y + wall.measured.height
     ) {
-      console.log("wall");
+      agent.data.color = "red";
       return true;
     }
   }
@@ -75,18 +84,18 @@ function isCollidingWithWall(agent: Agent, walls: (Wall | Stand)[]): boolean {
 
 // Function to apply repelling force between two agents
 function repelAgents(agentA: Agent, agentB: Agent) {
-  const dist = distance(
-    agentA.position,
-    agentB.position,
-  );
+  const dist = distance(agentA.position, agentB.position);
 
   if (dist < MIN_DISTANCE && dist > 0) {
-		// Calculate the direction of repulsion
-    const delta = scalarMult(subtract(agentA.position, agentB.position), 1 / dist)
+    // Calculate the direction of repulsion
+    const delta = scalarMult(
+      subtract(agentA.position, agentB.position),
+      1 / dist
+    );
 
     // Apply repulsion based on the overlap distance
-    const overlap = ((MIN_DISTANCE - dist) / MIN_DISTANCE);
-		agentA.data.dv = add(agentA.data.dv, scalarMult(delta, overlap * 3));
+    const overlap = (MIN_DISTANCE - dist) / MIN_DISTANCE;
+    agentA.data.dv = add(agentA.data.dv, scalarMult(delta, overlap * 3));
   }
 }
 
@@ -95,14 +104,7 @@ export function step(curAgent: Agent, objects: (Agent | Stand | Wall)[]) {
 
   const randomWander = getVectorAt(curAgent.position.x, curAgent.position.y);
 
-	agent.data.dv = addDir(agent.data.dv, randomWander);
-
-  // Check if the agent is about to hit a wall and prevent movement if needed
-  if (isCollidingWithWall(agent, objects.filter(isWallOrStandNode))) {
-    // Reverse the movement to avoid collision
-    agent.position.x -= randomWander.x;
-    agent.position.y -= randomWander.y;
-  }
+  // agent.data.dv = addDir(agent.data.dv, randomWander);
 
   //  Avoid collisions with other agents
   objects.forEach((object) => {
@@ -111,11 +113,25 @@ export function step(curAgent: Agent, objects: (Agent | Stand | Wall)[]) {
     }
   });
 
-  if (agent.position.x > 1000 + NODE_WIDTH || agent.position.y > 1000 + NODE_WIDTH || agent.position.x < -1000 - NODE_WIDTH || agent.position.y < -1000 - NODE_WIDTH) {
+  agent.position = add(agent.position, scalarMult(agent.data.dv, AGENT_SPEED));
+
+  // Check if the agent is about to hit a wall and prevent movement if needed
+  if (isCollidingWithWall(agent, objects.filter(isWallOrStandNode))) {
+    // Reverse the movement to avoid collision
+    agent.position = subtract(
+      agent.position,
+      scalarMult(agent.data.dv, AGENT_SPEED)
+    );
+    agent.data.dv = randomVec();
+  }
+  if (
+    agent.position.x > 1000 + NODE_WIDTH ||
+    agent.position.y > 1000 + NODE_WIDTH ||
+    agent.position.x < -1000 - NODE_WIDTH ||
+    agent.position.y < -1000 - NODE_WIDTH
+  ) {
     return null;
   }
-
-  agent.position = add(agent.position, scalarMult(agent.data.dv, AGENT_SPEED));
 
   return agent;
 }

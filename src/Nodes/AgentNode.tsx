@@ -6,7 +6,8 @@ function AgentNode({ data }) {
 
   return (
 		<div
-			className={`AgentNode`}>
+			className={`AgentNode`} style={{ backgroundColor: data.color}}>
+				<span>x</span>
 		</div>
   );
 }

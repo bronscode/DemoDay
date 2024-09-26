@@ -24,42 +24,15 @@ export const getNewId = (nodes: Node[]) => {
 const initialNodes = [
   {
     id: "1",
-    position: { x: 100, y: 100 },
-    data: { label: "EnginX", width: 100, heigth: 30 },
-    type: "standNode",
-    draggable: true,
-  },
-  {
-    id: "2",
     position: { x: 300, y: 100 },
     data: { label: "", dv: randomVec() },
     type: "agentNode",
     draggable: false,
   },
-  {
-    id: "6",
-    position: { x: 1100, y: 100 },
-    data: { label: "Bronscode", width: 100, heigth: 30 },
-    type: "standNode",
-    draggable: true,
-  },
-  {
-    id: "11",
-    position: { x: 0, y: 0 },
-    data: { label: "", width: 30, heigth: 100 },
-    type: "wallNode",
-    draggable: true,
-  },
-  {
-    id: "12",
-    position: { x: 1100, y: 0 },
-    data: { label: "", width: 30, heigth: 100 },
-    type: "wallNode",
-    draggable: true,
-  },
+ 
 ];
 
-const snapGrid: [number, number] = [64, 64];
+const snapGrid: [number, number] = [32, 32];
 
 export default function FlowView() {
   const nodeTypes = useMemo(
