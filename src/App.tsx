@@ -1,6 +1,5 @@
-import React from 'react';
 import {ReactFlowProvider} from '@xyflow/react';
-import FlowView from './FlowView.tsx';
+import FlowView from './FlowView';
 
 import '@xyflow/react/dist/style.css';
 import './App.css';

@@ -7,6 +7,6 @@
 }
 
 .react-flow__node.react-flow__node-agentNode { 
-    transition: transform 2000ms linear;
-    transition-delay: var(--data-id);
+    transition: transform 500ms linear;
+    /* transition-delay: var(--data-id); */
 }

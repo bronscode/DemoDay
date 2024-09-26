@@ -1,0 +1,26 @@
+{
+	"compilerOptions": {
+		"target": "es2021",
+		"lib": ["dom", "dom.iterable", "esnext"],
+		"skipLibCheck": true,
+		"allowSyntheticDefaultImports": true,
+		"experimentalDecorators": true,
+		"noImplicitAny": false,
+		"strict": true,
+		"strictNullChecks": true,
+		"strictPropertyInitialization": false,
+		"forceConsistentCasingInFileNames": true,
+		"noFallthroughCasesInSwitch": true,
+		"module": "commonjs",
+		"esModuleInterop": true,
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"noEmit": false,
+		"emitDecoratorMetadata": true,
+		"noUnusedParameters": false,
+		"jsx": "react-jsx",
+		"sourceMap": true
+	},
+	"include": ["src", "vite-env.d.ts"],
+	"exclude": ["node_modules", "test", "build", "**/spec.ts"]
+}

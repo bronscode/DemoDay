@@ -1,33 +1,40 @@
+import { createNoise2D } from "simplex-noise";
+import { add, addDir, distance, fromAngle, scalarMult, subtract, Vector2D } from "./vectors";
+
 export interface Agent {
   id: string;
-  data: { label: string };
-  position: { x: number; y: number };
+  data: { label: string, dv: Vector2D };
+  position: Vector2D;
   type: string;
   draggable: boolean;
-};
+}
 
 export interface Stand {
   id: string;
   data: { label: string };
-  measured: { width: number, height: number};
-  position: { x: number; y: number };
+  measured: { width: number; height: number };
+  position: Vector2D;
   type: string;
-};
+}
 
 export interface Wall {
   id: string;
-  measured: { width: number, height: number};
+  measured: { width: number; height: number };
   data: { label: string };
-  position: { x: number; y: number };
+  position: Vector2D;
   type: string;
-};
+}
 
-const AGENT_SPEED = 200;
-const MIN_DISTANCE = 100;
+const AGENT_SPEED = 30;
+const MIN_DISTANCE = 120;
+const NODE_WIDTH = 100;
 
-// Function to calculate distance between two points
-function distance(x1: number, y1: number, x2: number, y2: number): number {
-  return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2);
+const VECTOR_FIELD = createNoise2D();
+
+export function getVectorAt(xpos: number, ypos: number) {
+  const angle = VECTOR_FIELD(xpos / 500, ypos / 500);
+
+  return fromAngle(angle);
 }
 
 export function isAgentNode(node: any): node is Agent {
@@ -59,68 +66,56 @@ function isCollidingWithWall(agent: Agent, walls: (Wall | Stand)[]): boolean {
       agent.position.y > wall.position.y &&
       agent.position.y < wall.position.y + wall.measured.height
     ) {
-      console.log("wall")
+      console.log("wall");
       return true;
     }
   }
   return false;
 }
 
-// // Function to apply repelling force between two agents
+// Function to apply repelling force between two agents
 function repelAgents(agentA: Agent, agentB: Agent) {
-  const dist = distance(agentA.position.x, agentA.position.y, agentB.position.x, agentB.position.y);
+  const dist = distance(
+    agentA.position,
+    agentB.position,
+  );
 
   if (dist < MIN_DISTANCE && dist > 0) {
-    // Calculate the direction of repulsion
-    const delta = {
-      x: (agentA.position.x - agentB.position.x) / dist,
-      y: (agentA.position.y - agentB.position.y) / dist,
-    };
+		// Calculate the direction of repulsion
+    const delta = scalarMult(subtract(agentA.position, agentB.position), 1 / dist)
 
     // Apply repulsion based on the overlap distance
-    const overlap = MIN_DISTANCE - dist;
-    agentA.position.x += delta.x * overlap * 0.3; 
-    agentA.position.y += delta.y * overlap * 0.3;
+    const overlap = ((MIN_DISTANCE - dist) / MIN_DISTANCE);
+		agentA.data.dv = add(agentA.data.dv, scalarMult(delta, overlap * 3));
   }
 }
 
-// Step function to update the agents' positions with collision avoidance
-// function updateAgents(
-//   agents: Agent[],
-//   stands: Stand[],
-//   walls: Wall[],
-//   deltaTime: number,
-//   agentRadius: number
-// ): void {
-//   agents.forEach((agent, index) => {
-   
-//   });
-// }
-
 export function step(curAgent: Agent, objects: (Agent | Stand | Wall)[]) {
+  const agent = { ...curAgent };
 
-  const agent = {...curAgent}
+  const randomWander = getVectorAt(curAgent.position.x, curAgent.position.y);
 
- // Add random wandering (small random movement)
- const randomWander = {
-   x: (Math.random() - 0.5) * AGENT_SPEED,
-   y: (Math.random() - 0.5) * AGENT_SPEED,
- };
- agent.position.x += randomWander.x;
- agent.position.y += randomWander.y;
+	agent.data.dv = addDir(agent.data.dv, randomWander);
 
- // Check if the agent is about to hit a wall and prevent movement if needed
- if (isCollidingWithWall(agent, objects.filter(isWallOrStandNode))) {
-   // Reverse the movement to avoid collision
-   agent.position.x -= randomWander.x;
-   agent.position.y -= randomWander.y;
- }
-
-//  Avoid collisions with other agents
-objects.forEach((object) => {
-  if (object !== agent && isAgentNode(object)) {
-    repelAgents(agent, object);
+  // Check if the agent is about to hit a wall and prevent movement if needed
+  if (isCollidingWithWall(agent, objects.filter(isWallOrStandNode))) {
+    // Reverse the movement to avoid collision
+    agent.position.x -= randomWander.x;
+    agent.position.y -= randomWander.y;
   }
-})
-  return agent
+
+  //  Avoid collisions with other agents
+  objects.forEach((object) => {
+    if (object !== curAgent && isAgentNode(object)) {
+      repelAgents(agent, object);
+    }
+  });
+
+  if (agent.position.x > 1000 + NODE_WIDTH || agent.position.y > 1000 + NODE_WIDTH || agent.position.x < -1000 - NODE_WIDTH || agent.position.y < -1000 - NODE_WIDTH) {
+    return null;
+  }
+
+  agent.position = add(agent.position, scalarMult(agent.data.dv, AGENT_SPEED));
+
+  return agent;
 }
