@@ -21,9 +21,8 @@ export function useKeybind(
 }
 
 const addStand: KeyPressCallback = (flow) => {
-  const nodes = flow.getNodes();
-  const id = getNewId(nodes);
-  const newNode = {
+  const id = getNewId();
+  const newNode: any = {
     id: id,
     position: scalarMult(randomVec(), 200),
     data: { label: "StandNode" },
@@ -34,10 +33,9 @@ const addStand: KeyPressCallback = (flow) => {
 };
 
 const addAgent: KeyPressCallback = (flow) => {
-  const nodes = flow.getNodes();
   let newNodes: any = [];
   for (let i = 0; i < 10; i++) {
-    const id = getNewId(nodes.concat(newNodes));
+    const id = getNewId();
     newNodes.push({
       id: id,
       position: scalarMult(randomVec(), 200),
@@ -51,9 +49,8 @@ const addAgent: KeyPressCallback = (flow) => {
 };
 
 const addWall: KeyPressCallback = (flow) => {
-  const nodes = flow.getNodes();
-  const id = getNewId(nodes);
-  const newNode = {
+  const id = getNewId();
+  const newNode: any = {
     id: id,
     position: scalarMult(randomVec(), 200),
     data: { label: "WallNode", width: 30, heigth: 100 },
@@ -63,8 +60,22 @@ const addWall: KeyPressCallback = (flow) => {
   flow.setNodes((prev) => prev.concat(newNode));
 };
 
+const addSpawn: KeyPressCallback = (flow) => {
+  const nodes = flow.getNodes();
+  const id = getNewId();
+  const newNode: any = {
+    id: id,
+    position: scalarMult(randomVec(), 200),
+    data: { label: "SpawnNode", width: 30, heigth: 100 },
+    type: "spawnNode",
+    zIndex: 0,
+  };
+  flow.setNodes((prev) => prev.concat(newNode));
+};
+
 export default function useKeybinds() {
   useKeybind("q", addStand);
   useKeybind("w", addAgent);
   useKeybind("e", addWall);
+  useKeybind("r", addSpawn);
 }

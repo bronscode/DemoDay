@@ -1,11 +1,11 @@
 import { NodeResizer, useReactFlow } from "@xyflow/react";
 
-import "./StandNode.css";
+import "./SpawnNode.css";
 
-function StandNode({ id, data }) {
+function SpawnNode({ id, data }) {
   const { getNodes, setNodes } = useReactFlow();
 
-  const r = 0.5 + 0.5 * Math.sin(Number(id) * 10000);
+  const r = 0.5 + 0.5 * Math.sin(Number(data.id) * 10000);
   const hue = Math.floor(r * 360);
   return (
     <>
@@ -19,7 +19,11 @@ function StandNode({ id, data }) {
               node.id === id
                 ? {
                     ...node,
-                    data: { width: ResizeParams.x, height: ResizeParams.y, ...data },
+                    data: {
+                      ...node.data,
+                      width: ResizeParams.x,
+                      height: ResizeParams.y,
+                    },
                   }
                 : node
             )
@@ -28,11 +32,9 @@ function StandNode({ id, data }) {
         minWidth={32}
         minHeight={32}
       />
-      <div className={`StandNode`}>
-        <label>{data.label}</label>
-      </div>
+      <div className={`SpawnNode`}></div>
     </>
   );
 }
 
-export default StandNode;
+export default SpawnNode;

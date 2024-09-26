@@ -1,6 +1,7 @@
 import { createNoise2D } from "simplex-noise";
 import {
   add,
+  addDir,
   distance,
   fromAngle,
   randomVec,
@@ -11,7 +12,7 @@ import {
 
 export interface Agent {
   id: string;
-  data: { label: string; dv: Vector2D, collision?: boolean };
+  data: { label: string; dv: Vector2D, color: string };
   position: Vector2D;
   type: string;
   draggable: boolean;
@@ -35,7 +36,8 @@ export interface Wall {
 
 const AGENT_SPEED = 10;
 const MIN_DISTANCE = 120;
-const NODE_WIDTH = 50;
+const NODE_WIDTH = 106;
+export const AGENT_AMOUNT = 60;
 
 const VECTOR_FIELD = createNoise2D();
 
@@ -67,7 +69,7 @@ export function isWallOrStandNode(node: any): node is Wall | Stand {
 
 // Function to determine if an agent is about to collide with a wall
 function isCollidingWithWall(agent: Agent, walls: (Wall | Stand)[]): boolean {
-  const radius = (NODE_WIDTH / 2) - 24;
+  const radius = (NODE_WIDTH / 2) - 16;
   for (const wall of walls) {
     if (
       agent.position.x + radius > wall.position.x &&
@@ -75,7 +77,7 @@ function isCollidingWithWall(agent: Agent, walls: (Wall | Stand)[]): boolean {
       agent.position.y + radius > wall.position.y &&
       agent.position.y - radius < wall.position.y + wall.measured.height
     ) {
-      agent.data.collision = true;
+      agent.data.color = "red";
       return true;
     }
   }
@@ -102,7 +104,7 @@ function repelAgents(agentA: Agent, agentB: Agent) {
 export function step(curAgent: Agent, objects: (Agent | Stand | Wall)[]) {
   const agent = { ...curAgent };
 
-  const randomWander = getVectorAt(curAgent.position.x, curAgent.position.y);
+  // const randomWander = getVectorAt(curAgent.position.x, curAgent.position.y);
 
   // agent.data.dv = addDir(agent.data.dv, randomWander);
 
@@ -126,9 +128,9 @@ export function step(curAgent: Agent, objects: (Agent | Stand | Wall)[]) {
   }
   if (
     agent.position.x > 1000 + NODE_WIDTH ||
-    agent.position.y > 1000 + NODE_WIDTH ||
-    agent.position.x < -1000 - NODE_WIDTH ||
-    agent.position.y < -1000 - NODE_WIDTH
+    agent.position.y > 600 + NODE_WIDTH ||
+    agent.position.x < -2000 - NODE_WIDTH ||
+    agent.position.y < -600 - NODE_WIDTH
   ) {
     return null;
   }

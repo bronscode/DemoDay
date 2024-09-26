@@ -30,8 +30,8 @@ function WallNode({ id, data }) {
             )
           );
         }}
-        minWidth={30}
-        minHeight={100}
+        minWidth={32}
+        minHeight={32}
       />
       <div className={`WallNode`}></div>
     </>

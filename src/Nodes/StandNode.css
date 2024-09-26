@@ -1,11 +1,11 @@
 .StandNode {
 	position: relative;
-    display: flex;
+  display: flex;
 	width: 100%;
 	height: 100%;
 	background: #1282a2;
-	min-width: 100px;
-	min-height: 30px;
+	min-width: 32px;
+	min-height: 32px;
 }
 
 .StandNode > label {
