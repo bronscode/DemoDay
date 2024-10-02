@@ -47,8 +47,6 @@ export default function FlowView() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      console.log(nodes)
-
       //Step crowd model
       setNodes(
         (prevNodes) => 
