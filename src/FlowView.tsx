@@ -7,6 +7,7 @@ import {
   useNodesState,
   Node,
   Panel,
+  useReactFlow,
 } from "@xyflow/react";
 import React, { useEffect, useMemo } from "react";
 import StandNode from "./Nodes/StandNode";
@@ -16,7 +17,7 @@ import WallNode from "./Nodes/WallNode";
 import SpawnNode from "./Nodes/SpawnNode";
 import initialNodes from "./initialNodes.json";
 import { AGENT_AMOUNT, isAgentNode, step } from "./model";
-import { randomVec, scalarMult } from "./vectors";
+import { randomVec } from "./vectors";
 
 export const getNewId = () => {
   return `${Math.floor(Math.random() * 10000000) + 100}`;
@@ -39,10 +40,14 @@ export default function FlowView() {
     []
   );
 
+  const flowInstance = useReactFlow();
+
+
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes as any[]);
 
   useEffect(() => {
     const interval = setInterval(() => {
+      console.log(nodes)
 
       //Step crowd model
       setNodes(
@@ -73,8 +78,7 @@ export default function FlowView() {
     return () => clearInterval(interval);
   });
 
-  // console.log(nodes)
-  useKeybinds();
+  const [addAgent, addStand, addWall] = useKeybinds();
 
   return (
     <div style={{ width: "100vw", height: "100vh" }}>
@@ -107,6 +111,11 @@ export default function FlowView() {
       </ReactFlow>
       <Panel position="bottom-center">
         <button onClick={() => setNodes(initialNodes)}>Reset</button>
+      </Panel>
+      <Panel position="bottom-left" style={{left: "30px"}}>
+        <button onClick={() => addAgent(flowInstance)}>Add Agent</button>
+        <button onClick={() => addStand(flowInstance)}>Add Stand</button>
+        <button onClick={() => addWall(flowInstance)}>Add Wall</button>
       </Panel>
     </div>
   );

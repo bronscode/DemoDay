@@ -61,7 +61,6 @@ const addWall: KeyPressCallback = (flow) => {
 };
 
 const addSpawn: KeyPressCallback = (flow) => {
-  const nodes = flow.getNodes();
   const id = getNewId();
   const newNode: any = {
     id: id,
@@ -78,4 +77,5 @@ export default function useKeybinds() {
   useKeybind("w", addAgent);
   useKeybind("e", addWall);
   useKeybind("r", addSpawn);
+  return [addAgent, addStand, addWall]
 }
