@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/DemoDay/static/css/main.5d70cc0b.css",
+    "main.js": "/DemoDay/static/js/main.dba62331.js",
+    "index.html": "/DemoDay/index.html",
+    "main.5d70cc0b.css.map": "/DemoDay/static/css/main.5d70cc0b.css.map",
+    "main.dba62331.js.map": "/DemoDay/static/js/main.dba62331.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.5d70cc0b.css",
+    "static/js/main.dba62331.js"
+  ]
+}
