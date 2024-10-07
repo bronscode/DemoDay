@@ -87,7 +87,7 @@ export default function FlowView() {
         onNodesChange={onNodesChange}
         snapToGrid
         snapGrid={snapGrid}
-        defaultViewport={{x: 1800, y: 500, zoom: 3}}
+        defaultViewport={{x: 800, y: 400, zoom: 0.3}}
         translateExtent={[
           [-1000, -600],
           [1000, 600],
