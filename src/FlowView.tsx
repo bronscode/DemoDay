@@ -87,6 +87,7 @@ export default function FlowView() {
         onNodesChange={onNodesChange}
         snapToGrid
         snapGrid={snapGrid}
+        defaultViewport={{x: 1800, y: 500, zoom: 3}}
         translateExtent={[
           [-1000, -600],
           [1000, 600],
@@ -107,13 +108,13 @@ export default function FlowView() {
           offset={4}
         />
       </ReactFlow>
-      <Panel position="bottom-center">
-        <button onClick={() => setNodes(initialNodes)}>Reset</button>
+      <Panel className="BottomCenterPanel" position="bottom-center">
+        <button className="Button resetButton" onClick={() => setNodes(initialNodes)}>Reset</button>
       </Panel>
-      <Panel position="bottom-left" style={{left: "30px"}}>
-        <button onClick={() => addAgent(flowInstance)}>Add Agent</button>
-        <button onClick={() => addStand(flowInstance)}>Add Stand</button>
-        <button onClick={() => addWall(flowInstance)}>Add Wall</button>
+      <Panel className="BottomLeftPanel" position="bottom-left" style={{left: "90px"}}>
+        <button className="Button agentButton" onClick={() => addAgent(flowInstance)}>Add Agent</button>
+        <button className="Button standButton" onClick={() => addStand(flowInstance)}>Add Stand</button>
+        <button className="Button wallButton" onClick={() => addWall(flowInstance)}>Add Wall</button>
       </Panel>
     </div>
   );
