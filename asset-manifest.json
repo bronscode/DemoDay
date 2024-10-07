@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/DemoDay/static/css/main.563d5f68.css",
-    "main.js": "/DemoDay/static/js/main.8e969d35.js",
+    "main.js": "/DemoDay/static/js/main.91463441.js",
     "index.html": "/DemoDay/index.html",
     "main.563d5f68.css.map": "/DemoDay/static/css/main.563d5f68.css.map",
-    "main.8e969d35.js.map": "/DemoDay/static/js/main.8e969d35.js.map"
+    "main.91463441.js.map": "/DemoDay/static/js/main.91463441.js.map"
   },
   "entrypoints": [
     "static/css/main.563d5f68.css",
-    "static/js/main.8e969d35.js"
+    "static/js/main.91463441.js"
   ]
 }
