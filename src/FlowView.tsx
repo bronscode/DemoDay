@@ -83,11 +83,11 @@ export default function FlowView() {
       <ReactFlow
         nodes={nodes}
         nodeTypes={nodeTypes}
-        deleteKeyCode={"Delete"}
+        deleteKeyCode="Delete"
         onNodesChange={onNodesChange}
         snapToGrid
         snapGrid={snapGrid}
-        defaultViewport={{x: 800, y: 400, zoom: 0.3}}
+        defaultViewport={{x: 20000, y: -2000, zoom: 0.3}}
         translateExtent={[
           [-1000, -600],
           [1000, 600],
